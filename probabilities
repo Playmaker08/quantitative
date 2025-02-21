@@ -140,3 +140,20 @@ angle_degrees = np.arccos(cos_theta) * (180 / np.pi)
 
 # Display results
 E_Xt_given_Xs, E_Xs_plus_half_given_Xs, prob_X3_less_2_rounded, correct_answer_Q4, prob_X3_less_3_rounded, independence_results, basis_results, l2_norm_squared, round(angle_degrees, 2)
+
+
+## CHAPTER 4:
+
+import numpy as np
+
+# Given matrix A
+A = np.array([[1, 1, 1],
+              [1, 0, 1],
+              [2, 1, 2]])
+
+# Compute rank of A
+rank_A = np.linalg.matrix_rank(A)
+
+
+## CHAPTER 5:
+
