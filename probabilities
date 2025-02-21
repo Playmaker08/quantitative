@@ -155,5 +155,24 @@ A = np.array([[1, 1, 1],
 rank_A = np.linalg.matrix_rank(A)
 
 
-## CHAPTER 5:
+## CHAPTER 5: OPTIMIZATION
 
+# Question 7: Finding global maximum of f(x1, x2) = ln(x1) + ln(x2) with constraint 2x1 + 3x2 = 6
+def f_q7(x):
+    x1, x2 = x
+    return - (np.log(x1) + np.log(x2))  # Negate for maximization
+
+# Constraint 2x1 + 3x2 = 6
+constraint_q7 = {'type': 'eq', 'fun': lambda x: 2*x[0] + 3*x[1] - 6}
+
+# Bounds (x1, x2 must be positive for log function)
+bounds_q7 = [(0.01, None), (0.01, None)]  # Avoid log(0)
+
+# Initial guess
+x0_q7 = [1, 1]
+
+# Solve the optimization problem
+res_q7 = minimize(f_q7, x0_q7, constraints=constraint_q7, bounds=bounds_q7)
+global_max_value_q7 = round(-res_q7.fun, 2)  # Negate back to positive
+
+global_max_value_q7
