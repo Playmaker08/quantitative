@@ -72,3 +72,71 @@ E_Y_100 = X_100 / (n_100 + 2)
 E_X_200 = round(E_Y_100 * (n_200 + 2))
 
 E_X_given_Y1, E_W_200, E_X_200
+
+
+## CHAPTER 3:
+
+# Recomputing after execution state reset
+
+import numpy as np
+import scipy.stats as stats
+
+# Question 1: Expected value of Brownian motion given X_s = 1
+# Property of standard Brownian motion: E[X_t | X_s] = X_s
+E_Xt_given_Xs = 1  # Since E[X_t | X_s = 1] = X_s
+
+# Question 2: E[X_{s+1}^2 | X_s = 1] for Brownian Motion
+# Formula: E[X_t^2 | X_s] = X_s^2 + (t - s)
+s = 1  # Given X_s = 1
+t = s + 1  # Looking at X_{s+1}
+E_X_squared = 1**2 + (t - s)  # 1^2 + (1) = 2
+
+# Question 3: Probability P(X3 < 2 | X1 = 1) for standard Brownian motion
+X1 = 1
+X3 = 2
+t1 = 1
+t3 = 3
+
+mean_X3_given_X1 = X1  # E[X3 | X1] = X1
+std_X3_given_X1 = np.sqrt(t3 - t1)  # Standard deviation is sqrt(3-1)
+
+prob_X3_less_2 = stats.norm.cdf(X3, loc=mean_X3_given_X1, scale=std_X3_given_X1)
+prob_X3_less_2_rounded = round(prob_X3_less_2, 2)
+
+# Question 4: Geometric Brownian Motion and Martingale Property
+# Xt is a submartingale when μ > 0
+correct_answer_Q4 = "Xt is a submartingale."
+
+# Question 5: Probability P(X3 < 3 | X1 = 1) for geometric Brownian motion
+mu = 1
+sigma2 = 1
+X1 = 1
+X3 = 3
+t1 = 1
+t3 = 3
+
+# Log-normal distribution parameters
+mean_log_X3 = np.log(X1) + mu * (t3 - t1)
+std_log_X3 = np.sqrt(sigma2 * (t3 - t1))
+
+# Compute probability
+prob_X3_less_3 = stats.norm.cdf(np.log(X3), loc=mean_log_X3, scale=std_log_X3)
+prob_X3_less_3_rounded = round(prob_X3_less_3, 2)
+
+# Question 8: L2 norm squared of a vector of ones in R^16
+n = 16
+v1_vector = np.ones(n)
+l2_norm = np.linalg.norm(v1_vector)
+
+# Display results
+E_X_squared, prob_X3_less_3_rounded, basis_results_corrected, l2_norm
+
+# Question 9: Angle between two vectors
+v1_angle = np.array([1, 1, 0])
+v2_angle = np.array([1, 0, 1])
+
+cos_theta = np.dot(v1_angle, v2_angle) / (np.linalg.norm(v1_angle) * np.linalg.norm(v2_angle))
+angle_degrees = np.arccos(cos_theta) * (180 / np.pi)
+
+# Display results
+E_Xt_given_Xs, E_Xs_plus_half_given_Xs, prob_X3_less_2_rounded, correct_answer_Q4, prob_X3_less_3_rounded, independence_results, basis_results, l2_norm_squared, round(angle_degrees, 2)
