@@ -1,0 +1,74 @@
+## CHAPTER 1:
+
+import scipy.stats as stats
+import numpy as np
+
+# Question 1: Expectation of X in a Binomial distribution (n=10, p=0.5)
+n = 10  # number of trials
+p = 0.5  # probability of success
+expectation_X = n * p
+
+# Question 2: Variance of X in a Binomial distribution (n=10, p=0.5)
+variance_X = n * p * (1 - p)
+
+# Question 3: Conditional probability P[Y2 ≥ 4 | X ≤ 7]
+# Sample space for two fair dice (6-sided)
+outcomes = [(y1, y2) for y1 in range(1, 7) for y2 in range(1, 7)]
+
+# Count cases where X = Y1 + Y2 ≤ 7
+cases_X_leq_7 = [(y1, y2) for y1, y2 in outcomes if y1 + y2 <= 7]
+count_X_leq_7 = len(cases_X_leq_7)
+
+# Count cases where Y2 >= 4 given X <= 7
+cases_Y2_geq_4_given_X_leq_7 = [(y1, y2) for y1, y2 in cases_X_leq_7 if y2 >= 4]
+count_Y2_geq_4_given_X_leq_7 = len(cases_Y2_geq_4_given_X_leq_7)
+
+# Compute conditional probability
+conditional_prob = count_Y2_geq_4_given_X_leq_7 / count_X_leq_7
+
+# Question 4: Exponential Distribution P(X ≥ 3 | X ≥ 1)
+lambda_ = 1
+prob_X_geq_3_given_X_geq_1 = np.exp(-2)  # P(X ≥ 3) / P(X ≥ 1) = e^(-3) / e^(-1) = e^(-2)
+
+# Question 5: Expectation of e^X where X ~ N(2,4)
+mu = 2  # mean
+sigma2 = 4  # variance
+expectation_eX = np.exp(mu + sigma2 / 2)  # E[e^X] = e^(mu + sigma^2 / 2)
+expectation_eX_rounded = round(expectation_eX, 1)
+
+# Question 6: Expectation of X * exp(Y)
+E_X = 1  # Given E[X] = 1
+E_exp_Y = np.exp(0.5)  # E[exp(Y)] for Y ~ N(0,1) is e^(1/2)
+expectation_X_exp_Y = E_X * E_exp_Y
+expectation_X_exp_Y_rounded = round(expectation_X_exp_Y, 2)
+
+# Display results
+expectation_X, variance_X, round(conditional_prob, 3), prob_X_geq_3_given_X_geq_1, expectation_eX_rounded, expectation_X_exp_Y_rounded
+
+
+## CHAPTER 2:
+
+# Recomputing after execution state reset
+
+import numpy as np
+
+# Question 1: Conditional expectation E[X | Y = 1] when X, Y ~ N(0,1) with covariance 0.8
+rho = 0.8  # correlation coefficient (since X and Y are standard normal, covariance = correlation)
+E_X_given_Y1 = rho * 1  # E[X | Y] = rho * Y for bivariate normal
+
+# Question 2: Expected wealth after another 100 tosses (W200 given W100 = 12)
+W_100 = 12  # Given W100 = 12
+E_W_200 = W_100  # Since the process is a martingale, E[W200 | W100] = W100
+
+# Question 3: Expected number of red balls in the urn after 200 draws
+X_100 = 70  # Given X100 = 70
+n_100 = 100
+n_200 = 200
+
+# Using the hint: E[Y_n] = E[Y_100] = X_100 / (100 + 2)
+E_Y_100 = X_100 / (n_100 + 2)
+
+# E[X_200] = E[Y_100] * (200 + 2)
+E_X_200 = round(E_Y_100 * (n_200 + 2))
+
+E_X_given_Y1, E_W_200, E_X_200
