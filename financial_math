@@ -1,0 +1,258 @@
+## CHAPTER 1: LOANS - LEVEL PAYMENTS, OUTSTANDING BALANCES, AND AMORTIZATION TABLES
+
+# Question 1: Calculate the annual loan payment
+# Given data
+loan_amount = 1000  # Principal amount
+interest_rate = 0.05  # Annual interest rate
+num_years = 5  # Number of years
+
+# Using annuity formula: A = P * (r * (1 + r)^n) / ((1 + r)^n - 1)
+annual_payment = loan_amount * (interest_rate * (1 + interest_rate) ** num_years) / ((1 + interest_rate) ** num_years - 1)
+
+# Round to nearest dollar
+annual_payment_rounded = round(annual_payment)
+
+# Question 2: Find interest portion of the tenth payment
+# Given data
+interest_rate = 0.05  # Annual interest rate
+interest_payment_4 = 213.48  # Interest portion of 4th payment
+principal_payment_4 = 268.23  # Principal portion of 4th payment
+
+# Total payment per year (sum of interest and principal in 4th payment)
+annual_payment = interest_payment_4 + principal_payment_4
+
+# Loan balance after 4th payment
+loan_balance_4 = (interest_payment_4 / interest_rate)  # Since Interest = Balance * Rate
+
+# Remaining balance after 4th payment
+remaining_balance_4 = loan_balance_4 - principal_payment_4
+
+# Compute remaining balance after the 9th payment
+remaining_balance_9 = remaining_balance_4 * ((1 + interest_rate) ** 5) - (
+    annual_payment * (((1 + interest_rate) ** 5 - 1) / interest_rate)
+)
+
+# Interest portion of the 10th payment
+interest_payment_10 = remaining_balance_9 * interest_rate
+
+# Round to nearest whole dollar
+interest_payment_10_rounded = round(interest_payment_10)
+
+# Question 3: Find total interest paid
+# Given data
+loan_amount = 10000  # Principal amount
+monthly_payment = 600  # Monthly payment
+num_months = 24  # Total number of months
+
+# Total amount paid over the loan period
+total_amount_paid = monthly_payment * num_months
+
+# Total interest paid
+total_interest_paid = total_amount_paid - loan_amount
+
+# Round to nearest whole dollar
+total_interest_paid_rounded = round(total_interest_paid)
+
+total_interest_paid_rounded
+
+/// Question 4-5-6:
+# Given data
+loan_amount = 200000  # Principal amount
+annual_interest_rate = 0.06  # Annual interest rate
+monthly_interest_rate = annual_interest_rate / 12  # Monthly interest rate
+num_months = 30 * 12  # Total months (30 years)
+
+# Question 4: Monthly payment calculation using annuity formula
+monthly_payment = loan_amount * (monthly_interest_rate * (1 + monthly_interest_rate) ** num_months) / \
+                  ((1 + monthly_interest_rate) ** num_months - 1)
+
+# Round to nearest whole dollar
+monthly_payment_rounded = round(monthly_payment)
+
+# Question 5: Outstanding balance after 120 payments (10 years)
+num_payments_made = 120  # Payments made
+remaining_balance_120 = loan_amount * ((1 + monthly_interest_rate) ** num_payments_made) - \
+                        (monthly_payment * (((1 + monthly_interest_rate) ** num_payments_made - 1) / monthly_interest_rate))
+
+# Round to nearest hundred dollars
+remaining_balance_120_rounded = round(remaining_balance_120, -2)
+
+# Question 6: Extra $100 per month payment
+extra_payment = 100
+new_monthly_payment = monthly_payment + extra_payment
+
+# New remaining balance after 120 payments with extra payments
+remaining_balance_120_extra = loan_amount * ((1 + monthly_interest_rate) ** num_payments_made) - \
+                              (new_monthly_payment * (((1 + monthly_interest_rate) ** num_payments_made - 1) / monthly_interest_rate))
+
+# Round to nearest hundred dollars
+remaining_balance_120_extra_rounded = round(remaining_balance_120_extra, -2)
+
+monthly_payment_rounded, remaining_balance_120_rounded, remaining_balance_120_extra_rounded
+
+# Question 7: Calculate outstanding balance of the loan after 5th payment
+# Given data
+loan_amount = 20000  # Principal amount
+annual_payment = 4000  # Annual payment
+annual_interest_rate = 0.09  # Annual interest rate
+monthly_interest_rate = annual_interest_rate / 12  # Monthly interest rate
+effective_annual_interest_rate = (1 + monthly_interest_rate) ** 12 - 1  # Convert to effective annual rate
+num_payments_made = 5  # Payments made
+
+# Outstanding balance after 5th payment using loan balance formula
+remaining_balance_5 = loan_amount * ((1 + effective_annual_interest_rate) ** num_payments_made) - \
+                      (annual_payment * (((1 + effective_annual_interest_rate) ** num_payments_made - 1) / effective_annual_interest_rate))
+
+# Round to nearest ten dollars
+remaining_balance_5_rounded = round(remaining_balance_5, -1)
+
+remaining_balance_5_rounded
+
+# Question 8: Finding X in an increasing annuity
+# Given data
+loan_amount = 25000  # Principal amount
+num_years = 20  # Number of payments
+annual_interest_rate = 0.06  # Annual interest rate
+payment_increase = 200  # Increase per year
+
+# Using present value formula for an increasing annuity
+# PV = X * (1 - (1+r)^-n) / r + 200 * [(1 - (1+r)^-n) / r^2 - n(1+r)^-n / r]
+r = annual_interest_rate
+n = num_years
+
+# Solve for X
+X = (loan_amount - payment_increase * (((1 - (1 + r) ** -n) / r**2) - (n * (1 + r) ** -n / r))) / ((1 - (1 + r) ** -n) / r)
+
+# Round to nearest ten dollars
+X_rounded = round(X, -1)
+
+# Question 9: Finding principal portion in 10th payment
+# Given data
+principal_5 = 250  # Principal portion in 5th payment
+
+# Principal portion increases geometrically with (1 + r)
+principal_10 = principal_5 * (1 + r) ** 5
+
+# Round to nearest dollar
+principal_10_rounded = round(principal_10)
+
+X_rounded, principal_10_rounded
+
+# Question 10: Finding the annual effective interest rate
+# Given data
+principal_1 = 100.00  # Principal repaid in first payment
+principal_15 = 197.99  # Principal repaid in 15th payment
+n = 15  # 15th payment
+
+# Principal repaid follows a geometric sequence: P_k = P_1 * (1 + r)^(k-1)
+# Solving for r: (P_15 / P_1) = (1 + r)^14
+
+r_annual = (principal_15 / principal_1) ** (1 / (n - 1)) - 1
+
+# Round to four decimal places
+r_annual_rounded = round(r_annual, 4)
+
+# Question 11: Finding principal repaid in first payment
+# Given data
+monthly_payment = 500  # Level monthly payment
+outstanding_balance_59 = 495.05  # Balance after 59th payment
+interest_60 = 4.95  # Interest portion of last payment
+
+# Interest rate per month: i = Interest portion / Outstanding balance
+monthly_interest_rate = interest_60 / outstanding_balance_59
+
+# Principal portion of first payment: P_1 = Monthly Payment - Interest on full loan
+# Full loan balance before first payment = Monthly Payment * (1 - (1 + i)^-60) / i
+loan_amount = monthly_payment * (1 - (1 + monthly_interest_rate) ** -60) / monthly_interest_rate
+
+# First interest portion: i * Loan Amount
+interest_1 = loan_amount * monthly_interest_rate
+
+# First principal portion
+principal_1_payment = monthly_payment - interest_1
+
+# Round to nearest dollar
+principal_1_payment_rounded = round(principal_1_payment)
+
+r_annual_rounded, principal_1_payment_rounded
+
+# Question 12: Finding the principal repaid in the first payment
+
+# Given data
+annual_interest_rate = 0.06  # Annual effective interest rate
+balance_year_2 = 3172.82  # Balance at end of 2nd year
+balance_year_3 = 2176.20  # Balance at end of 3rd year
+
+# The difference between the two balances is the principal repaid in the 3rd year
+principal_3 = balance_year_2 - balance_year_3
+
+# The principal portion follows a geometric progression with (1 + interest rate)
+# Principal repaid in year 2 = Principal in year 3 / (1 + interest rate)
+principal_2 = principal_3 / (1 + annual_interest_rate)
+
+# Principal repaid in first year follows the same pattern
+principal_1_payment = principal_2 / (1 + annual_interest_rate)
+
+# Round to nearest dollar
+principal_1_payment_rounded = round(principal_1_payment)
+
+# Question 13: Total Interest Paid
+
+# Given data
+loan_amount_14 = 10000  # Initial loan amount
+num_years_14 = 10  # Number of years
+annual_interest_rate_14 = 0.08  # Annual effective interest rate
+principal_payment_14 = 1000  # Principal repaid each year
+
+# Interest paid each year follows: Interest = Outstanding Balance * Interest Rate
+# Compute total interest paid over 10 years
+total_interest_paid_14 = 0
+outstanding_balance = loan_amount_14
+
+for _ in range(num_years_14):
+    interest_payment = outstanding_balance * annual_interest_rate_14
+    total_interest_paid_14 += interest_payment
+    outstanding_balance -= principal_payment_14  # Reduce balance by fixed principal amount
+
+# Round to nearest dollar
+total_interest_paid_14_rounded = round(total_interest_paid_14)
+
+# Question 14: Finding interest rate j
+
+# Given data
+loan_amount_15 = 12000  # Initial loan amount
+num_years_15 = 6  # Number of years
+annual_interest_rate_option_a = 0.06  # Annual effective rate for option A
+principal_payment_15 = 2000  # Principal repaid each year
+
+# Compute equal annual payment for option A using annuity formula
+annual_payment_option_a = loan_amount_15 * (annual_interest_rate_option_a * (1 + annual_interest_rate_option_a) ** num_years_15) / \
+                          ((1 + annual_interest_rate_option_a) ** num_years_15 - 1)
+
+# Solve for interest rate j in option B where total payments match option A
+# Total payment in option B = Principal payment + Interest (j * remaining balance)
+# Need to find j such that sum of payments equals num_years * annual_payment_option_a
+
+from sympy import symbols, Eq, solve
+
+j = symbols('j')  # Define symbol for interest rate
+total_payment_option_b = 0
+outstanding_balance_15 = loan_amount_15
+
+for _ in range(num_years_15):
+    interest_payment = j * outstanding_balance_15
+    total_payment_option_b += principal_payment_15 + interest_payment
+    outstanding_balance_15 -= principal_payment_15
+
+# Solve for j where total payments equal total payments in option A
+equation = Eq(total_payment_option_b, num_years_15 * annual_payment_option_a)
+j_solution = solve(equation, j)[0]
+
+# Round to four decimal places
+j_solution_rounded = round(j_solution, 4)
+
+total_interest_paid_14_rounded, j_solution_rounded
+
+
+## CHAPTER 2: LOANS - NON-LEVEL PAYMENTS, DROP OR BALLOON PAYMENTS, REFINANCING
+
