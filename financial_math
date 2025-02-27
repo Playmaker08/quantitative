@@ -256,3 +256,209 @@ total_interest_paid_14_rounded, j_solution_rounded
 
 ## CHAPTER 2: LOANS - NON-LEVEL PAYMENTS, DROP OR BALLOON PAYMENTS, REFINANCING
 
+# Question 1: Refinancing after 5 payments with new interest rate, keeping the original term
+
+# Given data
+loan_amount = 30000  # Initial loan amount
+annual_interest_rate_old = 0.10  # Original interest rate (10%)
+annual_interest_rate_new = 0.08  # New interest rate after refinancing (8%)
+num_years = 15  # Original loan term
+num_payments_made = 5  # Payments made before refinancing
+
+# Step 1: Compute original annual payment using annuity formula
+annual_payment_old = loan_amount * (annual_interest_rate_old * (1 + annual_interest_rate_old) ** num_years) / \
+                     ((1 + annual_interest_rate_old) ** num_years - 1)
+
+# Step 2: Compute remaining balance after 5 payments
+remaining_balance = loan_amount * ((1 + annual_interest_rate_old) ** num_payments_made) - \
+                    (annual_payment_old * (((1 + annual_interest_rate_old) ** num_payments_made - 1) / annual_interest_rate_old))
+
+# Step 3: Compute new annual payment using the remaining balance and new interest rate
+num_remaining_years = num_years - num_payments_made  # Years left after refinancing
+
+annual_payment_new = remaining_balance * (annual_interest_rate_new * (1 + annual_interest_rate_new) ** num_remaining_years) / \
+                     ((1 + annual_interest_rate_new) ** num_remaining_years - 1)
+
+# Round to nearest ten dollars
+annual_payment_new_rounded = round(annual_payment_new, -1)
+
+annual_payment_new_rounded
+
+# Question 2: Outstanding balance after payments
+
+# Given data
+loan_amount_2 = 10_000_000  # Initial loan amount
+annual_interest_rate_2 = 0.12  # Annual effective rate (12%)
+monthly_interest_rate_2 = annual_interest_rate_2 / 12  # Monthly rate
+
+# Convert dates to months since loan inception (Jan 1, 2019)
+payment_schedule = {
+    12: 2_500_000,  # 12/31/2019 (12 months later)
+    24: 3_000_000,  # 12/31/2020 (24 months later)
+    48: 1_000_000   # 12/31/2022 (48 months later)
+}
+
+# Calculate balance progression with compounding and payments
+outstanding_balance_2 = loan_amount_2
+
+for month, payment in sorted(payment_schedule.items()):
+    outstanding_balance_2 *= (1 + monthly_interest_rate_2) ** (month - (0 if month == 12 else prev_month))
+    outstanding_balance_2 -= payment
+    prev_month = month
+
+# Round to nearest thousand dollars
+outstanding_balance_2_rounded = round(outstanding_balance_2, -3)
+
+# Question 3: Principal contained in the 5th payment
+
+# Given data
+num_years_7 = 8  # Loan term
+interest_rate_7 = 0.06  # Annual interest rate
+
+# Payments form an arithmetic series: 100, 200, 300, ..., 800
+first_payment_7 = 100
+payment_increase_7 = 100
+
+# Compute total loan amount using sum of present values
+PV_total_loan_7 = sum(
+    (first_payment_7 + (n - 1) * payment_increase_7) / (1 + interest_rate_7) ** n for n in range(1, num_years_7 + 1)
+)
+
+# Compute principal portion of 5th payment
+payment_5 = first_payment_7 + 4 * payment_increase_7  # 5th payment amount
+remaining_balance_4 = sum(
+    (first_payment_7 + (n - 1) * payment_increase_7) / (1 + interest_rate_7) ** (n - 4)
+    for n in range(5, num_years_7 + 1)
+)
+
+interest_5 = remaining_balance_4 * interest_rate_7
+principal_5 = payment_5 - interest_5
+
+# Round to nearest dollar
+principal_5_rounded = round
+
+# Question 4: Original loan value with different payment phases
+
+# Given data
+interest_rate_8 = 0.05  # Annual effective interest rate
+payments_8 = [1000] * 4 + [2000] * 4 + [3000] * 4  # Payment schedule
+years_8 = list(range(1, 13))  # Payment years
+
+# Compute present value of each phase and sum
+PV_loan_8 = sum(payments_8[i - 1] / (1 + interest_rate_8) ** i for i in years_8)
+
+# Round to nearest 100 dollars
+PV_loan_8_rounded = round(PV_loan_8, -2)
+
+
+import math
+
+# Question 5:
+# Person A borrows $800.
+# Repayment: 9 end-of-year payments of $100 + a balloon payment X at the end of year 10.
+# Interest rate = 5% per year effective.
+
+interest_rate_11 = 0.05
+principal_11 = 800
+
+# Calculate present value of the 9 payments of $100.
+pv_payments_11 = sum(100 / ((1 + interest_rate_11) ** k) for k in range(1, 10))
+
+# The balloon payment X must satisfy:
+# pv_payments_11 + X/(1.05)^10 = 800
+X_11 = (principal_11 - pv_payments_11) * ((1 + interest_rate_11) ** 10)
+
+# Round to the nearest dollar.
+X_11_rounded = round(X_11)
+
+print("Question 11: The balloon payment X is $", X_11_rounded)
+
+# Question 6:
+# Person A borrows $700.
+# Repayment: 10 end-of-year payments of $100 + a drop payment X at the end of year 11.
+# Interest rate = 8% per year effective.
+
+interest_rate_12 = 0.08
+principal_12 = 700
+
+# Calculate present value of the 10 payments of $100.
+pv_payments_12 = sum(100 / ((1 + interest_rate_12) ** k) for k in range(1, 11))
+
+# The drop payment X must satisfy:
+# pv_payments_12 + X/(1.08)^11 = 700
+X_12 = (principal_12 - pv_payments_12) * ((1 + interest_rate_12) ** 11)
+
+# Round to the nearest dollar.
+X_12_rounded = round(X_12)
+
+print("Question 12: The drop payment X is $", X_12_rounded)
+
+# Question 7:
+# Homeowner A borrows $250,000 for 30 years (360 months) with monthly payments.
+# The interest rate is 9% compounded monthly.
+# After the 44th payment, the loan is refinanced at 6% compounded monthly with term unchanged.
+#
+# Step 1: Calculate the original monthly payment.
+L = 250000
+n_total = 30 * 12  # 360 months
+i_old = 0.09 / 12  # monthly interest rate for original loan
+
+# Monthly payment formula:
+P_old = L * (i_old * (1 + i_old) ** n_total) / ((1 + i_old) ** n_total - 1)
+
+# Step 2: Find outstanding balance after 44 payments.
+n_payments_made = 44
+# Outstanding balance B = L*(1+i_old)^n_payments_made - P_old*((1+i_old)^n_payments_made - 1)/i_old
+B = L * ((1 + i_old) ** n_payments_made) - P_old * (((1 + i_old) ** n_payments_made - 1) / i_old)
+
+# Step 3: Refinance with new monthly rate and remaining term.
+i_new = 0.06 / 12  # New monthly interest rate
+n_remaining = n_total - n_payments_made  # Remaining months
+
+# New monthly payment formula:
+P_new = B * (i_new * (1 + i_new) ** n_remaining) / ((1 + i_new) ** n_remaining - 1)
+
+# Round new monthly payment to the nearest 10 dollars.
+P_new_rounded = round(P_new / 10) * 10
+
+print("Question 13: The new monthly payment is $", P_new_rounded)
+
+
+import math
+
+# Question 8:
+# -----------------------------------
+# Student A has an outstanding balance of $30,000 immediately after a payment.
+# They continue to pay $500 at the end of each month.
+# The interest rate is 6% compounded monthly, so the monthly rate is:
+i = 0.06 / 12  # 0.005 per month
+
+# We need to find the effective number of payments (n*) that would exactly amortize $30,000 at $500/month.
+# The annuity formula for a present value (PV) is:
+#    PV = Payment * (1 - (1+i)^(-n)) / i.
+# Here, PV = 30000 and Payment = 500.
+# Solve for n:
+#    1 - (1+i)^(-n) = (PV * i) / Payment.
+ratio = (30000 * i) / 500  # = (30000*0.005)/500 = 150/500 = 0.3.
+# Then:
+#    (1+i)^(-n) = 1 - 0.3 = 0.7,
+# so:
+n_star = -math.log(0.7) / math.log(1 + i)
+# n_star will be noninteger. The number of full $500 payments is the integer part.
+n_full = math.floor(n_star)
+
+# Calculate the outstanding balance immediately after the n_full-th payment.
+# The outstanding balance after n payments is given by:
+#   B(n) = PV*(1+i)^n - Payment * ((1+i)^n - 1) / i.
+B_n = 30000 * (1 + i)**n_full - 500 * (((1 + i)**n_full - 1) / i)
+
+# The final (drop) payment is made one month after the n_full-th payment,
+# so interest accrues on the remaining balance for one month.
+final_drop_payment = B_n * (1 + i)
+
+# Round the final drop payment to the nearest 10 dollars.
+final_drop_payment_rounded = round(final_drop_payment / 10) * 10
+
+
+## CHAPTER 3: BOND PRICING
+
