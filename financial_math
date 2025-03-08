@@ -462,3 +462,54 @@ final_drop_payment_rounded = round(final_drop_payment / 10) * 10
 
 ## CHAPTER 3: BOND PRICING
 
+# Given data for Question 1
+par_value = 8000  # Face value of the bond
+coupon_payment = 200  # Semiannual coupon payment
+annual_yield = 0.06  # Annual yield rate
+n_years = 20  # Number of years
+compounding_periods = 2  # Semiannual compounding
+
+# Convert annual yield to semiannual yield
+semiannual_yield = annual_yield / compounding_periods
+
+# Number of periods (semiannual)
+n_periods = n_years * compounding_periods
+
+# Compute Present Value of Coupons (Annuity)
+pv_coupons = coupon_payment * ((1 - (1 + semiannual_yield) ** -n_periods) / semiannual_yield)
+
+# Compute Present Value of Face Value (Lump Sum)
+pv_face_value = par_value / ((1 + semiannual_yield) ** n_periods)
+
+# Total Bond Price
+bond_price = pv_coupons + pv_face_value
+
+# Round to nearest whole dollar
+bond_price_rounded = round(bond_price)
+
+bond_price_rounded
+
+# Question 2: Find the yield rate i for 10-year bond
+# Given data
+bond_price_q11 = 779.20  # Purchase price
+coupon_rate_q11 = 0.03  # Coupon rate (3% of 1000)
+par_value_q11 = 1000  # Par value
+n_years_q11 = 10  # 10 years
+
+# Annual coupon payment
+coupon_payment_q11 = coupon_rate_q11 * par_value_q11
+
+# Solve for yield using numerical method
+i_low, i_high = 0.01, 0.10  # Bracket for possible yield rate
+while abs(i_high - i_low) > 0.0001:
+    i_guess = (i_low + i_high) / 2
+    pv_coupons = coupon_payment_q11 * ((1 - (1 + i_guess) ** -n_years_q11) / i_guess)
+    pv_redemption = par_value_q11 / (1 + i_guess) ** n_years_q11
+    bond_price_guess = pv_coupons + pv_redemption
+    
+    if bond_price_guess > bond_price_q11:
+        i_low = i_guess
+    else:
+        i_high = i_guess
+
+yield_rate_q11 = round(i_guess, 4)
