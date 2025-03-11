@@ -513,3 +513,78 @@ while abs(i_high - i_low) > 0.0001:
         i_high = i_guess
 
 yield_rate_q11 = round(i_guess, 4)
+
+
+## CHAPTER 5: NPV, DURATION, CONVEXITY
+
+# Question 1: NPV of investment project
+initial_investment = -100000  # Initial investment
+cost_of_capital = 0.12  # 12% discount rate
+
+# Cash flows from year 4 to year 15
+years = np.arange(4, 16)  # Years 4 to 15
+cash_flows = np.array([(5000 * (i - 3)) for i in years])  # Increasing cash flows
+
+# Discounting each cash flow
+npv_investment = sum(cash_flows / ((1 + cost_of_capital) ** years)) + initial_investment
+
+# Round to nearest $100
+npv_investment_rounded = round(npv_investment, -2)
+
+# Question 2: Modified duration of zero-coupon bond
+maturity = 30  # 30 years
+yield_to_maturity = 0.08  # 8%
+
+# Macaulay duration for zero-coupon bond is just its maturity
+macaulay_duration = maturity
+
+# Modified duration formula
+modified_duration = macaulay_duration / (1 + yield_to_maturity)
+
+# Round to two decimal places
+modified_duration_rounded = round(modified_duration, 2)
+
+# Display results
+npv_property_rounded, npv_investment_rounded, modified_duration_rounded
+
+# Question 3: Modified duration of zero-coupon bond
+# Given data
+face_value = 1000  # Bond face value
+coupon_rate = 0.06  # 6% coupon rate
+annual_coupon = face_value * coupon_rate  # Annual coupon payment
+years_bond = 30  # Bond maturity
+effective_rate_bond = 0.09  # 9% interest rate
+
+# Price of the bond (P) using PV formula for annuity + lump sum
+bond_price = sum([annual_coupon / ((1 + effective_rate_bond) ** t) for t in range(1, years_bond + 1)]) + \
+             face_value / ((1 + effective_rate_bond) ** years_bond)
+
+# Macaulay duration for coupon bond
+macaulay_duration_bond = sum([(t * annual_coupon) / ((1 + effective_rate_bond) ** t) for t in range(1, years_bond + 1)]) + \
+                         (years_bond * face_value) / ((1 + effective_rate_bond) ** years_bond)
+macaulay_duration_bond /= bond_price
+
+# Modified duration for coupon bond
+modified_duration_bond = macaulay_duration_bond / (1 + effective_rate_bond)
+modified_duration_bond_rounded = round(modified_duration_bond, 2)
+
+# Question 4: Macaulay Duration of a 3-Year Bond
+coupon = 100  # Coupon payment per year
+face_value = 1000  # Redemption value
+years_bond = 3  # Maturity in years
+interest_rate_bond = 0.10  # Annual effective interest rate
+
+# Calculate bond price (P)
+bond_price = sum([coupon / ((1 + interest_rate_bond) ** t) for t in range(1, years_bond + 1)]) + \
+             face_value / ((1 + interest_rate_bond) ** years_bond)
+
+# Calculate Macaulay Duration
+macaulay_duration_bond = sum([(t * coupon) / ((1 + interest_rate_bond) ** t) for t in range(1, years_bond + 1)]) + \
+                         (years_bond * face_value) / ((1 + interest_rate_bond) ** years_bond)
+macaulay_duration_bond /= bond_price
+
+# Round to two decimal places
+macaulay_duration_bond_rounded = round(macaulay_duration_bond, 2)
+
+
+## CHAPTER 6: TERM STRUCTURE OF INTEREST RATES
