@@ -588,3 +588,78 @@ macaulay_duration_bond_rounded = round(macaulay_duration_bond, 2)
 
 
 ## CHAPTER 6: TERM STRUCTURE OF INTEREST RATES
+
+# Question 1:
+# Given price for zero-coupon bond at t=3
+P3 = 901.94
+face_value = 1000  # Face value of the bond
+t = 3  # Maturity in years
+
+# Compute the implied spot rate for t=3
+S3 = (face_value / P3)**(1/t) - 1
+
+# Round to four decimal places
+S3_rounded = round(S3, 4)
+S3_rounded
+
+# Question 2:
+# Given prices for zero-coupon bonds at t=1 and t=4
+P1 = 970.87  # Price for maturity 1 year
+P4 = 854.80  # Price for maturity 4 years
+
+# Compute the implied spot rates for t=1 and t=4
+S1 = (face_value / P1)**(1/1) - 1
+S4 = (face_value / P4)**(1/4) - 1
+
+# Compute the ratio S4 / S1
+S4_S1_ratio = S4 / S1
+
+# Round to two decimal places
+S4_S1_ratio_rounded = round(S4_S1_ratio, 2)
+S4_S1_ratio_rounded
+
+# Question 3:
+# Given one-year forward rates
+forward_rates = [0.02, 0.03, 0.04, 0.05]
+
+# Compute the 4-year spot rate S4
+product_forward_rates = (1 + forward_rates[0]) * (1 + forward_rates[1]) * (1 + forward_rates[2]) * (1 + forward_rates[3])
+S4 = product_forward_rates**(1/4) - 1
+
+# Round to four decimal places
+S4_rounded = round(S4, 4)
+S4_rounded
+
+# Question 4:
+# Given spot rates for Question 8
+spot_rates_q8 = [0.07, 0.075, 0.09]
+
+# Given bond details
+coupon = 100  # Annual coupon payment
+face_value = 1000  # Face value of the bond
+num_years_q8 = len(spot_rates_q8)
+
+# Compute the present value of coupons and face value
+bond_price = sum(coupon / (1 + spot_rates_q8[t])**(t+1) for t in range(num_years_q8)) + face_value / (1 + spot_rates_q8[-1])**num_years_q8
+
+# Round to the nearest whole dollar
+bond_price_rounded = round(bond_price)
+bond_price_rounded
+
+# Question 5:
+# Given one-year forward rates for Question 9
+forward_rates_q9 = [0.04, 0.0425, 0.05, 0.055, 0.065]
+
+# Compute the 5-year spot rate S5
+product_forward_rates_q9 = (1 + forward_rates_q9[0]) * (1 + forward_rates_q9[1]) * (1 + forward_rates_q9[2]) * (1 + forward_rates_q9[3]) * (1 + forward_rates_q9[4])
+S5 = product_forward_rates_q9**(1/5) - 1
+
+# Compute the zero-coupon bond price
+P5 = 1000 / (1 + S5)**5
+
+# Round results
+S5_rounded = round(S5, 4)
+P5_rounded = round(P5)
+P5_rounded
+
+# Question 6:
