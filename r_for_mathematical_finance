@@ -1,0 +1,29 @@
+*** WEEK 1: PROBABILITY
+
+# Code sample: scaling the binomial distribution
+# Binomial distribution – sequence of increasing n
+nlist <- c(1, 2, 5, 10, 20, 50, 100, 1000)
+
+p <- 0.1
+for (n in nlist) {
+  k <- 0:n
+  f <- dbinom(k, n, p)
+  barplot(f, names = k, xlab = "Number of Successes", ylab = "Probability",
+          main = paste("Binomial Distribution, p =", p, " n =", n))
+  readline()
+}
+
+# Code sample: scaling the binomial distribution
+# Binomial distribution – sequence of increasing n
+nlist <- c(1, 2, 5, 10, 20, 50, 100, 1000)
+
+p <- 0.3
+for (n in nlist) {
+  k <- 0:n
+  f <- dbinom(k, n, p)
+  barplot(f, names = k, xlab = "Number of Successes", ylab = "Probability",
+          main = paste("Binomial Distribution, p =", p, " n =", n))
+  readline()
+}
+
+*** WEEK 2: INTRO TO DISCRETE-TIME STOCHASTIC PROCESSES
